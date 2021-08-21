@@ -1,4 +1,13 @@
-function forms() {
+import {
+    closeModal,
+    openModal
+} from "./modalwindow";
+
+import {
+    postData
+} from '../services/services';
+
+function forms(formSelector, modalTimerId) {
     //LESSON_53 - SENDING DATA ON SERVER
 
     // ******************************************MY VERSION******************************************
@@ -802,7 +811,7 @@ function forms() {
 
 
 
-    const forms = document.querySelectorAll("form");
+    const forms = document.querySelectorAll(formSelector);
 
     const message = {
         loading: "icons/spinner.svg",
@@ -810,19 +819,7 @@ function forms() {
         failure: "Что то пошло не так",
     };
 
-    const postData = async function (url, data) {
-        const res = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json"
-            },
-            body: data
-        });
-        console.log(res);
-        const newData = await res.json();
-        console.log(newData);
-        return newData;
-    };
+
 
     function bindPostData(form) {
         form.addEventListener("submit", (event) => {
@@ -861,7 +858,7 @@ margin: 0 auto;
     function showThanksModal(message) {
         const prevModalDialog = document.querySelector(".modal__dialog");
         prevModalDialog.classList.add("hide");
-        showModal();
+        openModal(".modal", modalTimerId);
         const thanksModal = document.createElement("div");
         thanksModal.classList.add("modal__dialog");
         thanksModal.innerHTML = `
@@ -873,7 +870,7 @@ margin: 0 auto;
         document.querySelector(".modal").append(thanksModal);
 
         setTimeout(() => {
-            closeModal();
+            closeModal(".modal");
             thanksModal.remove();
             prevModalDialog.classList.remove("hide");
         }, 1000);
@@ -886,4 +883,4 @@ margin: 0 auto;
 }
 
 
-module.exports = forms;
+export default forms;

@@ -1,11 +1,8 @@
-function timer() {
+function timer(id, deadLine) {
 
     //LESSON 41 - TIMER
 
-
-
     // MY REALIZATION
-
 
     // let daysParent = document.querySelectorAll(".timer__block")[0],
     //     days = daysParent.querySelector("span"),
@@ -61,10 +58,6 @@ function timer() {
     // }, 500);
 
 
-
-
-
-
     // leftTime = deadLine - currentDate;
     //     leftSeconds = leftTime / 1000;
     //     leftMinutes = leftSeconds / 60;
@@ -73,12 +66,9 @@ function timer() {
     // leftDays = Math.floor(leftHours / 24);
     // console.log(leftDays);
 
-
-
-
     // VERSION OF LECTURER
 
-    const deadLine = "2021-08-11";
+
 
     function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -98,7 +88,7 @@ function timer() {
 
     function getZero(num) {
         if (num >= 0 && num < 10) {
-            return `0${num}`
+            return `0${num}`;
         } else {
             return num;
         }
@@ -124,11 +114,8 @@ function timer() {
         updateClock();
         let timeInterval = setInterval(updateClock, 1000);
     }
-    setClock(".timer", deadLine);
 
-
-
-
+    setClock(id, deadLine);
 }
 
-module.exports = timer;
+export default timer;

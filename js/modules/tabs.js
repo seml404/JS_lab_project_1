@@ -1,10 +1,10 @@
-function tabs() {
+function tabs(tabsSelector, tabsContentSelector, tabsParentSelector, activeClass) {
 
     // LESSON 38 - TABS
 
-    const tabs = document.querySelectorAll(".tabheader__item"),
-        tabsContent = document.querySelectorAll(".tabcontent"),
-        tabsParent = document.querySelector(".tabcontainer");
+    const tabs = document.querySelectorAll(tabsSelector),
+        tabsContent = document.querySelectorAll(tabsContentSelector),
+        tabsParent = document.querySelector(tabsParentSelector);
 
 
 
@@ -16,7 +16,7 @@ function tabs() {
             item.classList.add("hide");
         });
         tabs.forEach((item) => {
-            item.classList.remove("tabheader__item_active");
+            item.classList.remove(activeClass);
         });
     }
 
@@ -25,7 +25,7 @@ function tabs() {
         tabs[i].classList.remove("hide");
         tabsContent[i].classList.add("fade");
         tabsContent[i].classList.add("show");
-        tabs[i].classList.add("tabheader__item_active");
+        tabs[i].classList.add(activeClass);
 
     }
 
@@ -52,7 +52,7 @@ function tabs() {
     // ********************************LECTURER'S VERSION********************************
     tabsParent.addEventListener("click", (event) => {
         const target = event.target;
-        if (target && target.classList.contains("tabheader__item")) {
+        if (target && target.classList.contains(tabsSelector.slice(1))) {
             tabs.forEach((item, i) => {
                 if (target == item) { //идет сравнение переменных, в которых записывается ССЫЛКА на один и тот же объект (!!!!!!!). 
                     // Соответственно, один и тот же объект в один момент сравнивается сам с собой! А так, конечно, два объекта никогда не равны друг другу.
@@ -80,4 +80,4 @@ function tabs() {
 
 }
 
-module.exports = tabs;
+export default tabs;

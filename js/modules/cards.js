@@ -1,3 +1,7 @@
+import {
+    getResourse
+} from "../services/services";
+
 function cards() {
 
     // LESSON 48 - USING CLASSES FOR CARDS
@@ -118,13 +122,7 @@ function cards() {
 
     // LECTURER'S VERSION - v1
 
-    const getResourse = async function (url) {
-        const res = await fetch(url);
-        if (!res.ok) {
-            throw new Error(`Couldn't fetch ${url}, status: ${res.status}`)
-        }
-        return await res.json();
-    };
+
 
     // LESSON 60 - USING AXIOS LIBRARY
 
@@ -229,4 +227,4 @@ function cards() {
 
 }
 
-module.exports = cards;
+export default cards;

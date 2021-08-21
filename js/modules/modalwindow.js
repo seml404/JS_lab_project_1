@@ -1,4 +1,22 @@
-function modalWindow() {
+function openModal(modalSelector, modalTimerId) {
+    const modal = document.querySelector(modalSelector);
+    modal.classList.add('show'); // преподаватель делал не через Inline а через классы; это действительно лучше
+    modal.classList.remove("hide");
+    document.body.style.overflow = "hidden"; // все правильно я сделал
+    console.log(modalTimerId);
+    if (modalTimerId) {
+        clearInterval(modalTimerId);
+    }
+}
+
+function closeModal(modalSelector) {
+    const modal = document.querySelector(modalSelector);
+    modal.classList.remove("show");
+    modal.classList.add("hide");
+    document.body.style.overflow = "";
+}
+
+function modal(triggerSelector, modalSelector, modalTimerId) {
 
     // LESSON 43 - MODAL WINDOW
 
@@ -66,42 +84,22 @@ function modalWindow() {
     //lecturer version amended by me
 
 
-
-
-    const modalTrigger = document.querySelectorAll("[data-modal]"),
+    const modalTrigger = document.querySelectorAll(triggerSelector),
         // modalCloseBtn = document.querySelector("[data-close]"),
-        modal = document.querySelector(".modal");
+        modal = document.querySelector(modalSelector);
 
-    const modalId = setTimeout(showModal, 50000);
-
-
-    function showModal() {
-        modal.classList.add('show'); // преподаватель делал не через Inline а через классы; это действительно лучше
-        modal.classList.remove("hide");
-        document.body.style.overflow = "hidden"; // все правильно я сделал
-        clearTimeout(modalId);
-    }
     modalTrigger.forEach((item) => {
-        item.addEventListener("click", showModal);
+        item.addEventListener("click", () => openModal(modalSelector, modalTimerId));
     });
-
-    function closeModal() {
-        modal.classList.remove("show");
-        modal.classList.add("hide");
-        document.body.style.overflow = "";
-    }
-
     // modalCloseBtn.addEventListener('click', closeModal);
-
     modal.addEventListener('click', (event) => {
         if (event.target === modal || event.target.getAttribute("data-close") == '') {
-            closeModal();
+            closeModal(modalSelector);
         }
     });
-
     document.addEventListener("keydown", (event) => {
         if (event.key === 'Escape' && modal.classList.contains("show")) {
-            closeModal();
+            closeModal(modalSelector);
         }
     });
 
@@ -109,13 +107,13 @@ function modalWindow() {
 
     // **********************************************MY VERSION**********************************************
     // появление через определенное время
-    // setTimeout(showModal, 5000);
+    // setTimeout(openModal, 5000);
 
     // когда долистал до конца
     // const html = document.querySelector("html");
     //  function checkHeight(){
     //      if(document.documentElement.clientHeight === document.documentElement.scrollHeight - window.pageYOffset){
-    //         showModal();
+    //         openModal();
     //      }
     // }
 
@@ -126,20 +124,20 @@ function modalWindow() {
 
 
 
-    function showModalByScroll() {
+    function showModalByScroll(modalSelector) {
         if (document.documentElement.clientHeight + window.pageYOffset >= document.documentElement.scrollHeight) {
-            showModal();
+            openModal(modalSelector, modalTimerId);
             window.removeEventListener("scroll", showModalByScroll);
         }
-
     }
 
-
-    window.addEventListener("scroll", showModalByScroll);
-
-    // 
-
-
+    window.addEventListener("scroll", () => showModalByScroll(".modal"));
 }
 
-module.exports = modalWindow;
+export default modal;
+export {
+    closeModal
+};
+export {
+    openModal
+};
